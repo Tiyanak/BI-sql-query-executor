@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>PI DZ4</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap/dist/css/bootstrap.min.css" th:href="@{/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap/dist/css/bootstrap-theme.min.css" th:href="@{/bootstrap/dist/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap/dist/css/bootstrap-treeview.css" th:href="@{bootstrap/dist/css/bootstrap-treeview.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap/dist/css/style.css" th:href="@{bootstrap/dist/css/style.css}" />
+
+    <script src="../static/bootstrap/dist/js/jquery-3.2.1.js" th:src="@{/bootstrap/dist/js/jquery-3.2.1.js}"></script>
+    <script src="../static/bootstrap/dist/js/popper.min.js" th:src="@{/bootstrap/dist/js/popper.min.js}"></script>
+    <script src="../static/bootstrap/dist/js/bootstrap.min.js" th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script src="../static/bootstrap/dist/js/bootstrap-treeview.js" th:src="@{/bootstrap/dist/js/bootstrap-treeview.js}"></script>
+
+</head>
+<body>
+<div align="center" style="width: 40%">
+    <form method="get" action="#" th:action="@{/}" th:object="${login}" th:method="POST">
+        <table class="table" align="center" style="width: 40%">
+            <tr>
+                <td>jdbc url</td>
+                <td><input type="text" th:field="*{jdbc_url}" placeholder="jdbc url"/></td>
+            </tr>
+            <tr>
+                <td>host:port</td>
+                <td> <input type="text" th:field="*{host_port}" placeholder="host:port"/></td>
+            </tr>
+            <tr>
+                <td>database name</td>
+                <td><input type="text" th:field="*{database}" placeholder="database name"/></td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td><input type="text" th:field="*{user}" placeholder="username"/></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type="password" th:field="*{password}" placeholder="password"/></td>
+            </tr>
+            <tr>
+                <td>jdbc</td>
+                <td><input type="text" th:field="*{jdbc}" placeholder="jdbc"/></td>
+            </tr>
+            <tr>
+                <td>connection url</td>
+                <td><input type="text" th:field="*{connectionUrl}" placeholder="connection url"/></td>
+            </tr>
+        </table>
+
+        <input class="btn btn-primary" type="submit" value="Connect"/>
+
+    </form>
+</div>
+</body>
+</html>
