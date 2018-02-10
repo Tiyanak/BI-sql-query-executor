@@ -1,5 +1,6 @@
 package hr.fer.pi.controller;
 
+import hr.fer.pi.config.DatabaseConfig;
 import hr.fer.pi.model.ajax.SqlQueryResponse;
 import hr.fer.pi.model.ajax.TreeNode;
 import hr.fer.pi.model.custom_sql_model.DimenzijeSQL;
@@ -37,6 +38,9 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
 
+    @Autowired
+    private DatabaseConfig databaseConfig;
+
     private final MetadataService metadataService;
     private final JdbcTemplate jdbcTemplate;
 
@@ -46,11 +50,11 @@ public class MainController {
     private Map<String, String> groupby = new HashMap<>();
     private Map<Integer, String> fromCinj = new HashMap<>();
     private String sqlQuery = "";
-    String connectionUrlDefault = "jdbc:sqlserver://localhost:1433;databaseName=pi_dz4;user=ifarszky;password=Moonmoon22";
-    String jdbcDefault =  "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private String connectionUrlDefault = "jdbc:sqlserver://localhost:1433;databaseName=pi_dz4;user=****;password=****";
+    private String jdbcDefault =  "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
-    String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=pi_dz4;user=ifarszky;password=Moonmoon22";
-    String jdbc =  "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=pi_dz4;user=****;password=****";
+    private String jdbc =  "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
     @Autowired
     public MainController(MetadataService metadataService, JdbcTemplate jdbcTemplate) {
@@ -80,7 +84,8 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView mv = new ModelAndView("login");
-        mv.addObject("login", new Login("jdbc:sqlserver://", ":", "databaseName=", "user=", "password=", "com.microsoft.sqlserver.jdbc.SQLServerDriver", ""));
+        mv.addObject("login", new Login("jdbc:sqlserver://", databaseConfig.getHost_port(),
+                databaseConfig.getDatabaseName(), databaseConfig.getUsername(), databaseConfig.getPassword(), databaseConfig.getDriverClassName(), ""));
 
         return mv;
     }
@@ -92,12 +97,13 @@ public class MainController {
         } else {
             Connection con = null;
             try {
-                this.connectionUrl = login.getJdbc_url() + login.getHost_port() + ";" + login.getDatabase() + ";" +
-                        login.getUser() + ";" + login.getPassword() + ";";
+                this.connectionUrl = login.getJdbc_url() + login.getHost_port() + ";databaseName=" + login.getDatabase() + ";user=" +
+                        login.getUser() + ";password=" + login.getPassword() + ";";
                 this.jdbc = login.getJdbc();
 
                 Class.forName(this.jdbc);
                 con = DriverManager.getConnection(connectionUrl);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 this.connectionUrl = this.connectionUrlDefault;
